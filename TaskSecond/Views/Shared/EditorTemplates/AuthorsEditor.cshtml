@@ -3,6 +3,6 @@
 @(
         Html.Kendo().MultiSelectFor(m => m)
             .DataTextField("AuthorName")
-            .DataValueField("TerritoryID")
+            .DataValueField("AuthorId")
             .BindTo((IEnumerable<TaskSecond.Models.ViewModel>)ViewData["authors"])
 )

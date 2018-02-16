@@ -29,7 +29,6 @@
             .ServerOperation(false))
 )
 
-
 <script type="text/javascript">
     function dataBound(e) {
         var grid = this;
@@ -38,7 +37,7 @@
                 row = $(this);
             eval(row.find("script").html());
             var multiSelect = $(this).find("select").data("kendoMultiSelect");
-            multiSelect.value(dataitem.Territories.map(function (i) { return i.TerritoryID }));
+            multiSelect.value(dataitem.Authors.map(function (i) { return i.AuthorId }));
         });
     }
 

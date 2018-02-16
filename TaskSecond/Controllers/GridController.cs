@@ -31,7 +31,8 @@ namespace TaskSecond.Controllers
                 BookName = c.BookName,
                 Pages = c.Pages,
                 Genre = c.Genre,
-                Publisher = c.Publisher
+                Publisher = c.Publisher,
+                
 
             });
 
