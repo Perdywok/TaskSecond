@@ -1,0 +1,6 @@
+﻿@(Html.Kendo().MultiSelect()
+    .Name("Authors")
+    .BindTo((System.Collections.IEnumerable)ViewData["AuthorsList"])
+    .DataTextField("Text")
+    .DataValueField("Value")
+    )
