@@ -1,6 +1,8 @@
-﻿@(Html.Kendo().MultiSelect()
-    .Name("Authors")
-    .BindTo((System.Collections.IEnumerable)ViewData["AuthorsList"])
-    .DataTextField("Text")
-    .DataValueField("Value")
-    )
+﻿@model IEnumerable<TaskSecond.Models.ViewModel>
+
+@(
+        Html.Kendo().MultiSelectFor(m => m)
+            .DataTextField("AuthorName")
+            .DataValueField("TerritoryID")
+            .BindTo((IEnumerable<TaskSecond.Models.ViewModel>)ViewData["authors"])
+)

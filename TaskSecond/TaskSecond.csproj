@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\GridController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -209,6 +210,14 @@
     <Compile Include="Migrations\201802151317523_First.cs" />
     <Compile Include="Migrations\201802151317523_First.Designer.cs">
       <DependentUpon>201802151317523_First.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802160900259_Second.cs" />
+    <Compile Include="Migrations\201802160900259_Second.Designer.cs">
+      <DependentUpon>201802160900259_Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802160924097_Third.cs" />
+    <Compile Include="Migrations\201802160924097_Third.Designer.cs">
+      <DependentUpon>201802160924097_Third.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -295,6 +304,11 @@
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
     <Content Include="Views\Grid\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AuthorsEditor.cshtml" />
+    <Content Include="Views\Authors\Create.cshtml" />
+    <Content Include="Views\Authors\Delete.cshtml" />
+    <Content Include="Views\Authors\Details.cshtml" />
+    <Content Include="Views\Authors\Edit.cshtml" />
+    <Content Include="Views\Authors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -318,6 +332,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802151317523_First.resx">
       <DependentUpon>201802151317523_First.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802160900259_Second.resx">
+      <DependentUpon>201802160900259_Second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802160924097_Third.resx">
+      <DependentUpon>201802160924097_Third.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

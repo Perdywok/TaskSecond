@@ -18,31 +18,28 @@ namespace TaskSecond.Controllers
 
         public ActionResult Index()
         {
+            ViewData["authors"] = db.Authors;
             return View();
         }
 
         public ActionResult Books_Read([DataSourceRequest]DataSourceRequest request)
         {
-            IQueryable<Book> books = db.Books.Include(i => i.Authors); ;
-            var authors = from i in db.Authors
-                       select i.AuthorName;
-           // ViewData["AuthorsList"] = authors;
-
-            DataSourceResult result = books.ToDataSourceResult(request, book => new ViewModel {
-                BookId = book.BookId,
-                BookName = book.BookName,
-                Pages = book.Pages,
-                Genre = book.Genre,
-                Publisher = book.Publisher,
-               // AuthorNames = authors
-                Authors = book.Authors.ToList()
+            IQueryable<Book> books = db.Books;
+            DataSourceResult result = books.ToDataSourceResult(request, c => new ViewModel 
+            {
+                BookId = c.BookId,
+                BookName = c.BookName,
+                Pages = c.Pages,
+                Genre = c.Genre,
+                Publisher = c.Publisher
 
             });
 
-        return Json(result);
+            return Json(result,JsonRequestBehavior.AllowGet);
         }
+        /*
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Books_Create([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Book> books)
+        public ActionResult Books_Create([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ViewModel> books)
         {
             var entities = new List<Book>();
             if (books != null && ModelState.IsValid)
@@ -54,7 +51,8 @@ namespace TaskSecond.Controllers
                             BookName = book.BookName,
                             Pages = book.Pages,
                             Genre = book.Genre,
-                            Publisher = book.Publisher
+                            Publisher = book.Publisher,
+
                     };
 
                     db.Books.Add(entity);
@@ -63,11 +61,18 @@ namespace TaskSecond.Controllers
                 db.SaveChanges();
             }
 
-            return Json(entities.ToDataSourceResult(request, ModelState));
+            return Json(entities.ToDataSourceResult(request, ModelState, book => new ViewModel
+            {
+                BookName = book.BookName,
+                Pages = book.Pages,
+                Genre = book.Genre,
+                Publisher = book.Publisher,
+  
+            }));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Books_Update([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Book> books)
+        public ActionResult Books_Update([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ViewModel> books)
         {
             var entities = new List<Book>();
             if (books != null && ModelState.IsValid)
@@ -80,7 +85,8 @@ namespace TaskSecond.Controllers
                         BookName = book.BookName,
                         Pages = book.Pages,
                         Genre = book.Genre,
-                        Publisher = book.Publisher
+                        Publisher = book.Publisher,
+
                     };
 
                     entities.Add(entity);
@@ -90,11 +96,18 @@ namespace TaskSecond.Controllers
                 db.SaveChanges();
             }
 
-            return Json(entities.ToDataSourceResult(request, ModelState));
+            return Json(entities.ToDataSourceResult(request, ModelState, book => new ViewModel
+            {
+                BookName = book.BookName,
+                Pages = book.Pages,
+                Genre = book.Genre,
+                Publisher = book.Publisher,
+  
+            }));
         } 
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Books_Destroy([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Book> books)
+        public ActionResult Books_Destroy([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ViewModel> books)
         {
             var entities = new List<Book>();
             if (ModelState.IsValid)
@@ -107,7 +120,8 @@ namespace TaskSecond.Controllers
                         BookName = book.BookName,
                         Pages = book.Pages,
                         Genre = book.Genre,
-                        Publisher = book.Publisher
+                        Publisher = book.Publisher,
+   
                     };
 
                     entities.Add(entity);
@@ -117,9 +131,16 @@ namespace TaskSecond.Controllers
                 db.SaveChanges();
             }
 
-            return Json(entities.ToDataSourceResult(request, ModelState));
+            return Json(entities.ToDataSourceResult(request, ModelState, book => new ViewModel
+            {
+                BookName = book.BookName,
+                Pages = book.Pages,
+                Genre = book.Genre,
+                Publisher = book.Publisher,
+     
+            }));
         }
-
+        */
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

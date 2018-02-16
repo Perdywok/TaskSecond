@@ -1,73 +1,50 @@
-﻿
-@(Html.Kendo().Grid<TaskSecond.Models.Book>()
-                  .Name("grid")
-                  .Columns(columns =>
-                  {
-                      columns.Bound(c => c.BookName);
-                      columns.Bound(c => c.Pages);
-                      columns.Bound(c => c.Genre);
-                      columns.Bound(c => c.Publisher);
-                      columns.Bound(c => c.Authors).ClientTemplate("#= renderMultiSelectText(data.Authors) #")
-                         .EditorTemplateName("AuthorsEditor");
-                      columns.Command(command => { command.Destroy(); }).Width(180);
-                  })
-                  .ToolBar(toolbar =>
-                  {
-                      toolbar.Create();
-                      toolbar.Save();
-                  })
-                  .Editable(editable => editable.Mode(GridEditMode.InCell))
-                  .Pageable()
-                  .Selectable(selectable =>
-                  {
-                      selectable.Mode(GridSelectionMode.Single);
-                      selectable.Type(GridSelectionType.Row);
-                  })
-                  .Scrollable()
-                  .DataSource(dataSource => dataSource
-                      .Ajax()
-                      .Batch(true)
-                      .Model(model => model.Id(p => p.BookId))
-                      .Read(read => read.Action("Books_Read", "Grid"))
-                      .Create(create => create.Action("Books_Create", "Grid"))
-                      .Update(update => update.Action("Books_Update", "Grid"))
-                      .Destroy(destroy => destroy.Action("Books_Destroy", "Grid"))
-                  )
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@(Html.Kendo().Grid<TaskSecond.Models.ViewModel>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(e => e.BookId);
+            columns.Bound(e => e.Pages);
+            columns.Bound(e => e.Genre);
+            columns.Bound(e => e.Publisher);
+            columns.Bound(e => e.Authors).ClientTemplate(
+
+                 Html.Kendo().MultiSelect().Name("multi#=BookId#")
+                    .DataTextField("AuthorName")
+                    .DataValueField("AuthorId")
+                    .BindTo((IEnumerable<TaskSecond.Models.Author>)ViewData["authors"]) /*TaskSecond.Models.ViewModel*/
+                    .Events(e => e.Change("change"))
+                    .ToClientTemplate().ToHtmlString()
+                );
+        })
+        .Pageable()
+        .Events(e => e.DataBound("dataBound"))
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(5)
+            .Read(read => read.Action("Books_Read", "Grid"))
+            .ServerOperation(false))
 )
-<script>
-    function renderMultiSelectText(selectListArray) {
-        if (selectListArray != undefined && selectListArray[0] != undefined) {
 
 
-            var displayText;
-            $.each(selectListArray, function (index) {
-                if (displayText == undefined)
-                    displayText = selectListArray[index].AuthorName + ', ';
-                else displayText = displayText + selectListArray[index].AuthorName + ', ';
-            });
-            //remove the trailing ', '
-            return displayText.slice(0, -2);
-        }
-        else
-            return "";
+<script type="text/javascript">
+    function dataBound(e) {
+        var grid = this;
+        grid.tbody.children().each(function () {
+            var dataitem = grid.dataItem(this),
+                row = $(this);
+            eval(row.find("script").html());
+            var multiSelect = $(this).find("select").data("kendoMultiSelect");
+            multiSelect.value(dataitem.Territories.map(function (i) { return i.TerritoryID }));
+        });
+    }
+
+    function change(e) {
+        var row = this.element.closest("tr"),
+            model = $("#grid").data("kendoGrid").dataItem(row);
+        model.set("Authors", this.dataItems());
     }
 </script>
-<!-- <script>
-    function renderMultiSelectText(selectListArray) {
-        if (selectListArray != undefined && selectListArray[0] != undefined) {
-
-
-            var displayText;
-            $.each(selectListArray, function (index) {
-                if (displayText == undefined)
-                    displayText = selectListArray[index].Text + ', ';
-                else displayText = displayText + selectListArray[index].Text + ', ';
-            });
-            //remove the trailing ', '
-            return displayText.slice(0, -2);
-        }
-        else
-            return "";
-    }
-</script>
-    -->

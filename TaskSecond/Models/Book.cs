@@ -25,9 +25,5 @@ namespace TaskSecond.Models
         public Genre Genre { get; set; }
 
         public string Publisher { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<Author> Authors { get; set; }
-
-
     }
 }

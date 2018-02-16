@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,8 +19,8 @@ namespace TaskSecond.Models
 
         public string Publisher { get; set; }
         //public string AuthorName { get; set; }
-
-        public List<Author> Authors { get; set; }
+        [UIHint("AuthorsEditor")]
+        public IEnumerable<Author> Authors { get; set; }
         //public IQueryable<string> AuthorNames { get; set; }
     }
 }
