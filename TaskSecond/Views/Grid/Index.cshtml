@@ -36,14 +36,15 @@
             var dataitem = grid.dataItem(this),
                 row = $(this);
             eval(row.find("script").html());
-            var multiSelect = $(this).find("select").data("kendoMultiSelect");
-            multiSelect.value(dataitem.Authors.map(function (i) { return i.AuthorId }));
+            //var multiSelect = $("#multiselect").data("kendoMultiSelect");
+            var multiSelect = $(this).find("select").data("kendoMultiSelect");// тут ошибка
+            multiSelect.value(dataitem.Authors.map(function (i) { return i.AuthorId }));//соответственно и тут
         });
     }
 
     function change(e) {
         var row = this.element.closest("tr"),
-            model = $("#grid").data("kendoGrid").dataItem(row);
+            model = $("#grid").data("kendoGrid").dataItem(row);// и тут
         model.set("Authors", this.dataItems());
     }
 </script>

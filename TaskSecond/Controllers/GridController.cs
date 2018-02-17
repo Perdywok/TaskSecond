@@ -25,14 +25,14 @@ namespace TaskSecond.Controllers
         public ActionResult Books_Read([DataSourceRequest]DataSourceRequest request)
         {
             IQueryable<Book> books = db.Books;
-            DataSourceResult result = books.ToDataSourceResult(request, c => new ViewModel 
+            DataSourceResult result = books.ToDataSourceResult(request, c => new ViewModel
             {
                 BookId = c.BookId,
                 BookName = c.BookName,
                 Pages = c.Pages,
                 Genre = c.Genre,
                 Publisher = c.Publisher,
-                
+                Authors = db.Authors.Where(i => i.BookId == c.BookId).ToList()// test
 
             });
 

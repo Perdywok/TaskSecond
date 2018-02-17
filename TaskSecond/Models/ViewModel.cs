@@ -4,6 +4,10 @@ namespace TaskSecond.Models
 {
     public class ViewModel
     {
+        public ViewModel()
+        {
+            Authors = new List<Author>();
+        }
         public int BookId { get; set; }
 
         public string BookName { get; set; }
@@ -15,7 +19,7 @@ namespace TaskSecond.Models
         public string Publisher { get; set; }
         //public string AuthorName { get; set; }
         [UIHint("AuthorsEditor")]
-        public IEnumerable<Author> Authors { get; set; }
+        public List<Author> Authors { get; set; }
         //public IQueryable<string> AuthorNames { get; set; }
     }
 }
