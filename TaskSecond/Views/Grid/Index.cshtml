@@ -19,17 +19,50 @@
                     .Events(e => e.Change("change"))
                     .ToClientTemplate().ToHtmlString()
                 );
+            columns.Command(command => command.Destroy()).Width(150);
         })
+        .ToolBar(toolbar =>
+        {
+            toolbar.Create();
+            toolbar.Save();
+        })
+        .Editable(editable => editable.Mode(GridEditMode.InCell))
+                                                .Pageable()
+                                                .Filterable()
         .Pageable()
         .Events(e => e.DataBound("dataBound"))
         .DataSource(dataSource => dataSource
             .Ajax()
+
+            .Model(model =>
+            {
+                model.Id(p => p.BookId);
+                model.Field(p => p.Pages).DefaultValue(0);
+                model.Field(p => p.Genre).DefaultValue(0);
+                model.Field(p => p.Publisher).DefaultValue("");
+                model.Field(p => p.Authors).DefaultValue(
+                    ViewData["defaultAuthors"] as TaskSecond.Models.Author);
+            })
             .PageSize(5)
             .Read(read => read.Action("Books_Read", "Grid"))
+    .Create(create => create.Action("Books_Create", "Grid"))
+     .Update(update => update.Action("Books_Update", "Grid"))
+    .Destroy(destroy => destroy.Action("Books_Destroy", "Grid"))
             .ServerOperation(false))
 )
 
 <script type="text/javascript">
+    /*
+    var editedRow = "";
+
+    function onError(e) {
+        if (e.errors) {
+            var tr = $("#grid").data("kendoGrid").select();
+            var rowItems = $('#grid').data("kendoGrid").dataItem(tr);
+            editedRow = rowItems.uid;
+        }
+    }
+    */
     function dataBound(e) {
         var grid = this;
         grid.tbody.children().each(function () {
@@ -38,6 +71,7 @@
             eval(row.find("script").html());
             //var multiSelect = $("#multiselect").data("kendoMultiSelect");
             var multiSelect = $(this).find("select").data("kendoMultiSelect");
+
             multiSelect.value(dataitem.Authors.map(function (i) { return i.AuthorId }));
         });
     }

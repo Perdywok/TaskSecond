@@ -4,5 +4,5 @@
         Html.Kendo().MultiSelectFor(m => m)
             .DataTextField("AuthorName")
             .DataValueField("AuthorId")
-            .BindTo((IEnumerable<TaskSecond.Models.ViewModel>)ViewData["authors"])
+            .BindTo((IEnumerable<TaskSecond.Models.Author>)ViewData["authors"])//TaskSecond.Models.ViewModel
 )

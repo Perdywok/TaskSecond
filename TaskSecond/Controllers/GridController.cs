@@ -38,7 +38,7 @@ namespace TaskSecond.Controllers
 
             return Json(result,JsonRequestBehavior.AllowGet);
         }
-        /*
+        
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Books_Create([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ViewModel> books)
         {
@@ -53,7 +53,7 @@ namespace TaskSecond.Controllers
                             Pages = book.Pages,
                             Genre = book.Genre,
                             Publisher = book.Publisher,
-
+                            
                     };
 
                     db.Books.Add(entity);
@@ -141,7 +141,7 @@ namespace TaskSecond.Controllers
      
             }));
         }
-        */
+        
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
